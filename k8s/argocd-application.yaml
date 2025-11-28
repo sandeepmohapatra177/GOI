@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/<your-github-username>/GOI.git'
+    repoURL: 'https://github.com/sandeepmohapatra177/GOI.git'
     targetRevision: main
     path: k8s
   destination:
