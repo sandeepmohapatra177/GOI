@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goi-api
+  namespace: goi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: goi-api
+  template:
+    metadata:
+      labels:
+        app: goi-api
+    spec:
+      containers:
+        - name: goi-api
+          image: goi-api:local
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: goi-api-config
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: goi-postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: goi-github-token
+                  key: GITHUB_TOKEN
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: goi-api
+  namespace: goi
+spec:
+  selector:
+    app: goi-api
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP
+

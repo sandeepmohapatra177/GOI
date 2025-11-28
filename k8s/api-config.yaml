@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: goi-api-config
+  namespace: goi
+data:
+  DB_HOST: "goi-postgres"
+  DB_PORT: "5432"
+  DB_NAME: "goidb"
+  DB_USER: "goiuser"
+
